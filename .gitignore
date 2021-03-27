@@ -1,8 +1,5 @@
-# Cache objects
-packer_cache/
-
-# Crash log
-crash.log
-
-# For built boxes
-*.box
+# checkpoint
+__pycache__
+.ipynb_checkpoints
+ckpt/*
+nsmc
