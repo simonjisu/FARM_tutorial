@@ -12,4 +12,6 @@ $ cd FARM_tutorial
 $ conda create --name farm python=3.7 -y
 $ pip install requirements.txt
 $ git clone https://github.com/e9t/nsmc
+$ python ./src/preprocess.py
+$ python ./src/train.py
 ```
