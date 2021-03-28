@@ -1,2 +1,1 @@
-python ./src/preprocess.py
-python ./src/train.py
+nohup python ./src/train.py > ../farmtrain.log &

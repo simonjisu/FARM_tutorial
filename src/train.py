@@ -1,4 +1,3 @@
-import farm
 import torch
 import argparse
 from farm.modeling.tokenization import Tokenizer
@@ -13,7 +12,6 @@ from farm.utils import MLFlowLogger
 
 def main(args):
     print(f"[INFO] PyTorch Version: {torch.__version__}")
-    print(f"[INFO] FARM Version: {farm.__version__}")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("[INFO] Devices available: {}".format(device))
     ml_logger = MLFlowLogger(tracking_uri=args.tracking_uri)
@@ -77,6 +75,7 @@ def main(args):
         evaluate_every=args.evaluate_every,
         checkpoints_to_keep=args.checkpoints_to_keep,
         checkpoint_root_dir=args.checkpoint_root_dir,
+        checkpoint_every=args.checkpoint_every,
         epochs=args.n_epochs,
         n_gpu=args.n_gpu,
         lr_schedule=lr_schedule,
@@ -104,7 +103,7 @@ if __name__ == "__main__":
         help="Processor - max sequence lenght of tokens")
     parser.add_argument("--data_dir",  type=str, default="./nsmc/",
         help="Processor - data directory")
-    parser.add_argument("--label_list", nargs"*", default=["bad", "good"],
+    parser.add_argument("--label_list", nargs="*", default=["bad", "good"],
         help="Processor - label list with string")
     parser.add_argument("--metric",  type=str, default="acc",
         help="Processor - acc or f1_macro")
@@ -113,16 +112,15 @@ if __name__ == "__main__":
     parser.add_argument("--text_column_name",  type=str, default="document",
         help="Processor - text column name")
 
-    parser.add_argument("--batch_size", type=int, default=32,
+    parser.add_argument("--batch_size", type=int, default=64,
         help="DataSilo - train batch size")
-    parser.add_argument("--eval_batch_size", type=int, default=32,
+    parser.add_argument("--eval_batch_size", type=int, default=64,
         help="DataSilo - eval batch size")
 
-    parser.add_argument("--embeds_dropout_prob ", type=float, default=0.1,
-        help="AdaptiveModel - The probability that a value in the embeddings \
-        returned by the language model will be zeroed.")
+    parser.add_argument("--embeds_dropout_prob", type=float, default=0.1,
+        help="AdaptiveModel - The probability that a value in the embeddings returned by the language model will be zeroed.")
 
-    parser.add_argument("--learning_rate ", type=float, default=2e-5,
+    parser.add_argument("--learning_rate", type=float, default=2e-5,
         help="initialize_optimizer - learning rate")
     parser.add_argument("--n_epochs", type=int, default=3,
         help="initialize_optimizer - number of epochs")
@@ -133,6 +131,8 @@ if __name__ == "__main__":
         help="Trainer - checkpoint root directory")
     parser.add_argument("--checkpoints_to_keep", type=int, default=3,
         help="Trainer - number of checkpoint to keep")
+    parser.add_argument("--checkpoint_every", type=int, default=1,
+        help="Trainer - checkpoint every")
     parser.add_argument("--evaluate_every", type=int, default=200,
         help="Trainer - evaluate steps")
     args = parser.parse_args()
