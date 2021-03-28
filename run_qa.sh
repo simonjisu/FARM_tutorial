@@ -1,0 +1,14 @@
+nohup python ./src/train.py \
+    --task_name 'question_answering' \
+    --experiment_name 'FARM_tutorial_QA' \
+    --run_name 'AIhub' \
+    --pretrained_model_name_or_path 'monologg/koelectra-base-v3-discriminator' \
+    --train_filename 'ko_nia_normal_squad_all_preprocessed.json' \
+    --test_filename 'ko_nia_clue0529_squad_all_preprocessed.json' \
+    --max_seq_len 512 \
+    --data_dir '/home/simonjisu/code/data/AIhub/QA' \
+    --label_list start_token end_token \
+    --metric 'squad' \
+    --batch_size 32 \
+    --eval_batch_size 32 \
+    --evaluate_every 0 > ../farm-qa.log &
