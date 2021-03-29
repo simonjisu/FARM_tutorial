@@ -16,6 +16,6 @@ python ./src/preprocess.py
 python ./src/train.py
 ```
 
-## Tutorial
+## Tutorial in Korean
 
-Open Notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonjisu/FARM_tutorial/blob/master/notebooks/FARM.ipynb)
+Colab Notebook Tutorial: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonjisu/FARM_tutorial/blob/main/notebooks/FARM.ipynb)
