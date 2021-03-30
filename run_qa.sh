@@ -9,6 +9,6 @@ nohup python ./src/train.py \
     --data_dir '/home/simonjisu/code/data/AIhub/QA' \
     --label_list start_token end_token \
     --metric 'squad' \
-    --batch_size 64 \
+    --batch_size 96 \
     --eval_batch_size 64 \
-    --evaluate_every 1000 > ../farm-qa.log &
+    --evaluate_every 200 > ../farm-qa.log &

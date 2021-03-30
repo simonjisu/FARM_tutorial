@@ -8,7 +8,7 @@ from farm.modeling.language_model import LanguageModel
 from farm.modeling.prediction_head import TextClassificationHead, QuestionAnsweringHead
 from farm.modeling.adaptive_model import AdaptiveModel
 from farm.modeling.optimization import initialize_optimizer
-from farm.train import Trainer
+from farm.train import Trainer, EarlyStopping
 from farm.utils import MLFlowLogger
 
 def main(args):
@@ -41,6 +41,7 @@ def main(args):
             tokenizer=tokenizer,
             train_filename=args.train_filename,
             dev_filename=args.test_filename,
+            test_filename=args.test_filename,
             max_seq_len=args.max_seq_len,
             data_dir=args.data_dir,
             label_list=args.label_list,
@@ -66,8 +67,11 @@ def main(args):
         args.pretrained_model_name_or_path, 
         language="korean"
     )
+
     # PredictionHead: Build predictor layer
     if args.task_name == "text_classification":
+        # If you do classification on imbalanced classes, consider using class weights. 
+        # They change the loss function to down-weight frequent classes.
         prediction_head = TextClassificationHead(
             num_labels=len(args.label_list), 
             class_weights=data_silo.calculate_class_weights(
@@ -81,6 +85,7 @@ def main(args):
         )
     else:
         raise ValueError("task name error")
+    
     # AdaptiveModel: Combine all
     if args.task_name == "text_classification":
         lm_output_types = ["per_sequence"]
@@ -96,6 +101,7 @@ def main(args):
         lm_output_types=lm_output_types,
         device=device
     )
+
     # Initialize Optimizer
     model, optimizer, lr_schedule = initialize_optimizer(
         model=model,
@@ -104,12 +110,23 @@ def main(args):
         n_batches=len(data_silo.loaders["train"]),
         n_epochs=args.n_epochs
     )
+    # EarlyStopping
+    earlymetric = "f1" if args.task_name == "question_answering" else "acc" 
+    mode = "max" if args.task_name in ["text_classification", "question_answering"] else "min"
+    earlystop = EarlyStopping(
+        save_dir=checkpoint_path,
+        metric=earlymetric,
+        mode=mode,
+        patience=3,
+    )
+
     # Trainer
     trainer = Trainer(
         model=model,
         optimizer=optimizer,
         lr_schedule=lr_schedule,
         data_silo=data_silo,
+        early_stopping=earlystop,
         evaluate_every=args.evaluate_every,
         checkpoints_to_keep=args.checkpoints_to_keep,
         checkpoint_root_dir=checkpoint_path,
@@ -120,7 +137,7 @@ def main(args):
     )
     # now train!
     model = trainer.train()
-    model.save(checkpoint_path)
+    # model.save(checkpoint_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="run farm")

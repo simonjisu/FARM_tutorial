@@ -1,1 +1,14 @@
-nohup python ./src/train.py > ../farmtrain.log &
+nohup python ./src/train.py \
+    --task_name 'text_classification' \
+    --experiment_name 'FARM_tutorial' \
+    --run_name 'NSMC' \
+    --pretrained_model_name_or_path 'beomi/kcbert-base' \
+    --train_filename 'train.tsv' \
+    --test_filename 'test.tsv' \
+    --max_seq_len 150 \
+    --data_dir './nsmc' \
+    --label_list bad good \
+    --metric 'acc' \
+    --batch_size 256 \
+    --eval_batch_size 256 \
+    --evaluate_every 10 > ../farm-textcls.log &
