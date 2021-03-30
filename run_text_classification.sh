@@ -9,6 +9,6 @@ nohup python ./src/train.py \
     --data_dir './nsmc' \
     --label_list bad good \
     --metric 'acc' \
-    --batch_size 256 \
-    --eval_batch_size 256 \
+    --batch_size 512 \
+    --eval_batch_size 512 \
     --evaluate_every 10 > ../farm-textcls.log &
