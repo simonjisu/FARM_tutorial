@@ -2,7 +2,18 @@
 
 [FARM(Framework for Adapting Representation Models)](https://github.com/deepset-ai/FARM) tutorial for new users
 
-# Requirements
+# How to Start?
+
+> Fine-Tuning KcBert with NSMC dataset
+
+- KcBert: [https://github.com/Beomi/KcBERT](https://github.com/Beomi/KcBERT)
+- NSMC dataset: [https://github.com/e9t/nsmc](https://github.com/e9t/nsmc)
+
+## Type 1. Tutorial in Colab (Korean)
+
+Just follow(`Shift` + `Enter`) it! Colab Notebook Tutorial: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonjisu/FARM_tutorial/blob/main/notebooks/FARM_colab.ipynb)
+
+## Type 2. Fork the project and run following code
 
 Please `fork` the github to your repository, then
 
@@ -16,6 +27,6 @@ python ./src/preprocess.py
 python ./src/train.py
 ```
 
-## Tutorial in Korean
+# To Be Added
 
-Colab Notebook Tutorial: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/simonjisu/FARM_tutorial/blob/main/notebooks/FARM_colab.ipynb)
+- [ ] Fine-Tuning with QA dataset with docker
