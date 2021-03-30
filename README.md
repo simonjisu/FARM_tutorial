@@ -27,6 +27,10 @@ python ./src/preprocess.py
 python ./src/train.py
 ```
 
+# Blog Article
+
+You can also see it from Blog: [simonjisu.github.io - Farm tutorial](https://simonjisu.github.io/nlp/2021/03/30/farm.html)
+
 # To Be Added
 
 - [ ] Fine-Tuning with QA dataset with docker
