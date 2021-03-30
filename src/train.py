@@ -27,6 +27,7 @@ def main(args):
         processor = TextClassificationProcessor(
             tokenizer=tokenizer,
             train_filename=args.train_filename,
+            dev_filename=None,
             test_filename=args.test_filename,
             header=0,
             max_seq_len=args.max_seq_len,
@@ -117,7 +118,7 @@ def main(args):
         save_dir=checkpoint_path,
         metric=earlymetric,
         mode=mode,
-        patience=3,
+        patience=5
     )
 
     # Trainer
